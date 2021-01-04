@@ -1,50 +1,6 @@
-# Instructions on provisioning Dell Precision 5530 with dualbooted Ubuntu (currently 18.04) + Windows
+This is a fork of https://github.com/serpro69/dell-precision-5530_ubuntu-win_dualboot
 
-**DISCLAIMER. THESE GUIDELINES ARE MY PERSONAL NOTES AND ALL THE MATERIALS HERE ARE PROVIDED “AS IS” WITH NO WARRANTIES WHATSOEVER REGARDING THE SECURITY, RELIABILITY, AND PERFORMANCE. THE AUTHOR MAKES NO WARRANTY THAT FOLLOWING THESE GUIDELINES YOUR SYSTEM WILL BE UNINTERRUPTED, TIMELY OR ERROR-FREE OR THAT THE RESULTS OR INFORMATION OBTAINED FROM USE OF THESE GUIDELINES WILL BE ACCURATE. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, EXEMPLARY OR PUNITIVE DAMAGES. YOU UNDERSTAND AND AGREE THAT YOU USE THE THE MATERIALS PROVIDED HERE AT YOUR OWN DISCRETION AND RISK AND THAT YOU WILL BE SOLELY RESPONSIBLE FOR YOUR ACTIONS, AND FOR ANY DAMAGES TO YOUR COMPUTER SYSTEM OR LOSS OF DATA THAT RESULTS FROM THE DOWNLOAD OR USE OF THESE GUIDELINES.**
-
-These are my personal notes on installing Ubuntu LTS (18.04 at the time of writing) alongside Windows 10 Pro
-on a Dell Precision 5530 (mid 2019) laptop.
-Most of these intructions and tweaks should apply to Dell XPS 15 9570 as well since they share mostly same hardware.
-They should also apply to some previous models of these laptop lines (Dell Precision 5520, Dell XPS 15 9560, Dell XPS 15 9550).
-I have personally tested the same setup (with very slight differences) on my other Dell XPS 15 9550 and everything works just fine.
-I don't make any guarantees though. If in doubt - read the disclaimer first and proceed at your own risk.
-
-## NOTE: This is a WIP guide.##
-
-## ToDo
-- [ ] ToC
-- [x] BIOS
-- [x] Reinstalling Windows 10
-  - [x] Downloading drivers and software
-  - [x] Downloading Windows 10 iso image
-  - [x] Creating bootable flash drive
-  - [x] Clean Windows 10 install
-  - [x] Tweaking Windows 10 after fresh install
-  - [ ] Optional software
-- [x] Installing Ubuntu
-  - [x] Downloading iso image
-  - [x] Creating bootable flash drive
-  - [x] Installing ubuntu as second boot
-  - [x] Partitioning SDD drive for Ubuntu installation
-  - [x] Dell Precision 5530 tweaks for Ubuntu
-    - [x] Respin image
-  - [ ] Installing necessary software packages **(This should be done with ansible)**
-  - [ ] Dotfiles **(This should be done with ansible)**
-  - [ ] Creating shared drive for Ubuntu and Windows
-  - [ ] Optional software
-
-
-# Table of Contents
-- [BIOS](#bios)
-  - [Updating BIOS](#updating-bios)
-  - [Tweaking BIOS for dual-boot](#tweaking-bios-for-dual-boot)
-- [Reinstalling Windows 10](#reinstalling-windows-10)
-  - [Downloading drivers and software](#donwloading-drivers-and-software)
-  - [Downloading Windows 10 image](#downloading-windows-10-image)
-  - [Creating bootable flash drive with Win10](#creating-bootable-flash-drive-with-win10)
-  - [Installing Windows 10](#installing-windows-10)
-  - [Applying optional tweaks to Windows 10](#applying-optional-tweaks-to-windows-10)
-
+# Instructions on provisioning Dell XPS 15 9650 with dualbooted Ubuntu (currently 18.04) + Windows 10
 
 ## BIOS
 ### Updating BIOS
@@ -64,7 +20,6 @@ Optionally:
 
 *Some extra info on setting up BIOS for dual-boot can be found on [DELL's support page](https://www.dell.com/support/article/no/no/nodhs1/sln301754/how-to-install-ubuntu-and-windows-8-or-10-as-a-dual-boot-on-your-dell-pc?lang=en#BIOS).*
 
-
 ## Reinstalling Windows 10
 It is advisable to reinstall Windows 10 on a newly-bought laptop.
 The default OS often comes bundled with bloatware, outdated drivers, etc., hence I prefer to always start with a clean install.
@@ -75,12 +30,7 @@ A clean Windows 10 is sh\*t and a huge spyware. If you are concerned about your 
 
 Prior to wiping the hard drive and installing clean Windows 10 download the following drivers, software and win10 tweak files.
 They will be needed later after installing fresh OS.
-- [DELL Precision 5530 Drivers](https://www.dell.com/support/home/en/us/nodhs1/product-support/product/precision-15-5530-laptop/drivers)
-- [O&O ShutUp10](https://www.oo-software.com/en/shutup10)
-- [CCleaner Portable](http://www.majorgeeks.com/files/details/ccleaner_portable.html)
-- [Autoruns](https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns)
-- [Registry and bat tweaks](./win10_reg_tweaks)
-- [VisualCppRedist_AIO_x86_x64_v12](https://drive.google.com/file/d/17oIRuawR3Plb3O9JPjhoFKGGDZ5iCrs5)
+Download the drivers from [DELL Precision 5530 Drivers](https://www.dell.com/support/home/en/us/nodhs1/product-support/product/xps-15-9560-laptop/drivers)
 
 ### Downloading Windows 10 image
 Windows 10 images are available for [download from Microsoft support site](https://www.microsoft.com/en-us/software-download/windows10ISO).
@@ -98,10 +48,6 @@ There is plenty of software that can create a bootable flash drive from the iso 
 - Reboot and press F12 for one-time boot menu.
 - Select UEFI flash drive
 - Follow [Windows 10 Clean Install Guide](http://forum.notebookreview.com/threads/windows-10-clean-installation-guide.781178/)
-
-### Applying optional tweaks to Windows 10
-After completing the previous step you should have a usable Windows 10 platform with most of spyware and telemetry disabled. However there are some additional tweaks that can be applied based on your tastes and desires. See [Windows 10 Tweaks and Fixes Guide](http://forum.notebookreview.com/threads/windows-10-tweaks-and-fixes-index-post-1.779394/) for more details.
-
 
 ## Installing Ubuntu
 ### Downloading iso image
@@ -156,16 +102,6 @@ This will install several drivers (including prime drivers for nvidia/intel grap
 ### Installing software packages and drivers
 This is an optional list of things that I use. Feel free to skip entirely or pick out what you might need.  
 
-Packages: **(This should be moved to install script)**
-- VPN
-  - install openvpn network manager for gnome shell `$ sudo apt-get install network-manager-openvpn-gnome` - without this package I was unable to import openvpn config file via `Settings -> Network` menu, nor connect to any of the remote host adresses using openvpn client from cli.
-  - Install openconnect network manager for gnome shell `$ sudo apt-get install network-manager-openconnect-gnome`
-  - Go to `Settings -> Network -> Modify vpn settings -> IPv4 -> Use this connection only for resources on its network -> Save`
-JDK - https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-18-04
-Gnome extensions and tweaks
-  - `$ sudo apt install stow`
-  - `$ sudo apt install xclip`
-
 ### Gnome Shell Extensions
 First install `$ sudo apt install gnome-shell-extensions gnome-tweaks`
 
@@ -187,175 +123,8 @@ Then install the following extensions:
 
 ### Optional software
 - [Dropbox](https://www.dropbox.com/install-linux)
-- [PCloud](https://www.pcloud.com/download-free-online-cloud-file-storage.html)
-- [KeePassXC](https://keepassxc.org/download/#linux)
-- [Brave Browser](https://brave.com/)
-  - [Start Page](https://github.com/xero/startpage)
-  - Extensions:
-    - <del>[Add to Wunderlist](https://chrome.google.com/webstore/detail/add-to-wunderlist/dmnddeddcgdllibmaodanoonljfdmooc)</dell>
-    - [cVim](https://chrome.google.com/webstore/detail/cvim/ihlenndgcmojhcghmfjfneahoeklbjjh)
-    - <del>[GNOME Shell integration](https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep)</del>
-    - [Google Translate](https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb) - until Brave comes up with their own translator.
-    - [New Tab Redirect](https://chrome.google.com/webstore/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna)
-    - [NoScript](https://chrome.google.com/webstore/detail/noscript/doojmbjmlfjjnbmnoijecmcbfeoakpjm)
-    - [OneTab](https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall)
-    - [Quick Tabs](https://chrome.google.com/webstore/detail/quick-tabs/jnjfeinjfmenlddahdjdmgpbokiacbbb)
-    - [Session Buddy](https://chrome.google.com/webstore/detail/session-buddy/edacconmaakjimmfgnblocblbcdcpbko)
-    - [Stylus](https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne)
-    - [TabCloud](https://chrome.google.com/webstore/detail/tabcloud/npecfdijgoblfcgagoijgmgejmcpnhof/)
-    - [uBLock Origin](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm)
-    - [Marinara](https://chrome.google.com/webstore/detail/marinara-pomodoro%C2%AE-assist/lojgmehidjdhhbmpjfamhpkpodfcodef)
-    - Joplin Web Clipper (To start using it, open the Joplin desktop application, go to the Web Clipper Options and follow the instructions.)
-- [IntelliJ Idea](https://www.jetbrains.com/idea/download/#section=linux)
-- [Atom](https://atom.io/)
-- [Guake Terminal](http://guake-project.org/)
-- [Slack](https://slack.com/intl/en-no/downloads/linux)
-- <del>[Telegram](https://desktop.telegram.org/)</del>
-- [Wire](https://wire.com/en/download/)
-- [Back in Time](https://github.com/bit-team/backintime) - backups
-- [Thunderbird](https://www.thunderbird.net/en-US/)
-- [DavMail](http://davmail.sourceforge.net/)
+- [vscode](https://code.visualstudio.com/)
 - [Firefox Browser](https://www.mozilla.org/en-US/firefox/new/)
   - Extensions:
     - [NoScript](https://addons.mozilla.org/en-US/firefox/addon/noscript/)
     - [uBLock Origin](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/)
-- [FlameShot](https://github.com/lupoDharkael/flameshot) - screenshot utility
-- [Freeplane](https://sourceforge.net/projects/freeplane/) - mind-mapping
-- [YourKit](https://www.yourkit.com/java/profiler/download/) - java profiler
-- [GIMP](https://www.gimp.org/downloads/)
-
-
-## Useful tips and tricks
-<details><summary><b>Some useful command-line tricks:</b></summary>
-<p>
-
-- To see the history of all changes made with `apt`([credits](https://askubuntu.com/a/250530/700229)):
-```
-$ (zcat $(ls -tr /var/log/apt/history.log*.gz); cat /var/log/apt/history.log) 2>/dev/null | \
-    egrep '^(Start-Date:|Commandline:)' | \
-    grep -v aptdaemon | \
-    egrep -B1 '^Commandline:'
-```
-
-- To see the history of all `apt(-get)? install` commands(without dates):
-```
-$ (zcat $(ls -tr /var/log/apt/history.log*.gz); cat /var/log/apt/history.log) 2>/dev/null | \
-    egrep '^(Commandline: apt(-get)? install)' | \
-    grep -v aptdaemon | \
-    egrep '^Commandline:'
-```
-
-- To see the history of all `apt(-get)? (remove|purge)` commands(without dates):
-```
-$ (zcat $(ls -tr /var/log/apt/history.log*.gz); cat /var/log/apt/history.log) 2>/dev/null | \
-    egrep '^(Commandline: apt(-get)? (remove|purge))' | \
-    grep -v aptdaemon | \
-    egrep '^Commandline:'
-```
-
-- Change the duration logs are kept for `dpkg` and `apt`:
-```
-$ sudo vim /etc/logrotate.d/apt
-# change rotate from 12 (months) to any other value
-$ sudo vim /etc/logrotate.d/dpkg
-# same as above
-```
-</p>
-</details>
-
-### Remapping keyboard keys
-https://superuser.com/questions/417568/setting-hyper-and-super-modifiers-for-certain-keys-with-setxkbmap-or-xmodmap
-https://askubuntu.com/questions/749660/how-can-i-persistently-remap-keys-in-ubuntu-16-04
-https://askubuntu.com/questions/423627/how-to-make-hyper-and-super-keys-not-do-the-same-thing?noredirect=1&lq=1
-
-
-## Fixes and Troubleshooting
-### Windows won't boot without ACHI mode
-- Run a Command Prompt (Admin)
-- Set reboot on safe mode, typing this command: bcdedit /set safeboot minimal
-- Restart and enter BIOS Setup
-- Change the SATA Operation mode to AHCI
-- Save changes and exit Setup
-- Windows will automatically boot to Safe Mode
-- Run a Command Prompt (Admin)
-- Set reboot to normal Windows, typing this command: bcdedit /deletevalue safeboot
-- Reboot once more and Windows will automatically start with AHCI drivers enabled
-
-### Fixing DNS resolutin on Ubuntu 18.04+ when connected to OpenVPN
-After some time of using Ubuntu I've noticed that connecting to VPN (with an option "Use this connection only for resources on this network") did not automatically resolve DNSs on that network.  
-
-Issuing `systemd-resolve --status` with VPN connection with disabled "Use this connection only for ..." option produced the following output:
-```
-Link 10 (tun0)
-      Current Scopes: DNS
-       LLMNR setting: yes
-MulticastDNS setting: no
-      DNSSEC setting: no
-    DNSSEC supported: no
-         DNS Servers: 10.xxx.xx.xx
-          DNS Domain: ~.
-```
-
-Whereas enabling "Use this connection only for ..." option produced:
-```
-Link 10 (tun0)
-      Current Scopes: none
-       LLMNR setting: yes
-MulticastDNS setting: no
-      DNSSEC setting: no
-    DNSSEC supported: no
-```
-
-#### Option 1 (didn't work for me, but kept as a possible solution for reference)
-* Install `openvpn-systemd-resolved` with `sudo apt install openvpn-systemd-resolved` or by following instructions in the [jonathanio/update-systemd-resolved](https://github.com/jonathanio/update-systemd-resolved#openvpn-configuration)
-* Enable stub resolver `sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf`
-* Modify openvpn conf by adding the following lines (At the beginning of the config file.)
-  ```
-  script-security 2
-  setenv PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-  up /etc/openvpn/scripts/update-systemd-resolved
-  up-restart
-  down /etc/openvpn/scripts/update-systemd-resolved
-  down-pre
-  ```
-[Source](https://askubuntu.com/questions/1032476/ubuntu-18-04-no-dns-resolution-when-connected-to-openvpn)
-
-#### Option 2 (this helped fix the issue and DNS were again resolving automatically on establishing VPN connection)
-Execute:
-```
-nmcli c modify <vpn-settings-name> ipv4.dns-search '<domain>'
-```
-where `<vpn-settings-name>` is the name of the VPN connection as displayed in Network Manager,
-and `<domain>` is the DNS search domain, i.e. `example.com`
-
-#### Option 3 (this helped with a diffevent vpn connection, also openvpn)
-Add the following lines at the end of the `client.ovpn` config file before importing it:
-```
-script-security 2
-up /etc/openvpn/update-resolv-conf
-down /etc/openvpn/update-resolv-conf
-```
-
-<i>Note: Try combining with <b>Option 2</b></i>
-
-Source: https://openvpn.net/vpn-server-resources/connecting-to-access-server-with-linux/
-
-### KDE Plasma Desktop Not Saving Desktop Settings
-https://bbs.archlinux.org/viewtopic.php?id=218052
-https://unix.stackexchange.com/questions/150513/how-do-i-stop-kde-from-changing-my-screen-resolution
-https://askubuntu.com/questions/299241/how-to-reset-kde-display-settings-after-a-move-to-a-new-machine
-
-Tried the following:
-- switching to intel video and back
-- some suggestions from above links
-
-### KDE does not connect to VPN (openvpn and openconnect) through NetworkManager
-Could not find a solution to this as of now.
-Had to go back to Gnome because of this issue.
-
-### Useful links
-[Using boot-repair tool to fix Windows boot](https://help.ubuntu.com/community/Boot-Repair#A2nd_option_:_install_Boot-Repair_in_Ubuntu)  
-[Disabling Secure Boot in Windows](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-8.1-and-8/dn481258(v=win.10))  
-[Recovering Ubuntu after installing Windows](https://help.ubuntu.com/community/RecoveringUbuntuAfterInstallingWindows)  
-
-## Extra links and thanks
