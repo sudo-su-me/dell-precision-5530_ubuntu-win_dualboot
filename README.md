@@ -25,11 +25,6 @@ It is advisable to reinstall Windows 10 on a newly-bought laptop.
 The default OS often comes bundled with bloatware, outdated drivers, etc., hence I prefer to always start with a clean install.
 
 ### Downloading drivers and software
-It is advisable to make some changes to Windows 10 prior to connecting to internet.
-A clean Windows 10 is sh\*t and a huge spyware. If you are concerned about your privacy (which you should be) then you should follow the guidelines on how to disable telemetry, cortana and apply other privacy related tweaks to Windows 10 (See below.) prior to connecting to internet. Therefore you will need some software and drivers to be downloaded first.
-
-Prior to wiping the hard drive and installing clean Windows 10 download the following drivers, software and win10 tweak files.
-They will be needed later after installing fresh OS.
 Download the drivers from [DELL Precision 5530 Drivers](https://www.dell.com/support/home/en/us/nodhs1/product-support/product/xps-15-9560-laptop/drivers)
 
 ### Downloading Windows 10 image
